@@ -128,7 +128,6 @@ void AVLTree<T>::erase(T value){
     _size--;
 }
 
-
 template <class T>
 void AVLTree<T>::balance(std::vector<AVLTreeNode<T> **> path){  // starting from root
     std::reverse(path.begin(), path.end());
@@ -136,7 +135,7 @@ void AVLTree<T>::balance(std::vector<AVLTreeNode<T> **> path){  // starting from
     for (auto indirect: path){
         (*indirect)->updateValues();
         
-        if ((*indirect)->balanceFactor() >= 2 and (*indirect)->left->balanceFactor() >= 1)   // left - left
+        if ((*indirect)->balanceFactor() >= 2 and (*indirect)->left->balanceFactor() >= 0)   // left - left
             *indirect = (*indirect)->right_rotate();
         
         else if ((*indirect)->balanceFactor() >= 2){  // left - right
@@ -144,7 +143,7 @@ void AVLTree<T>::balance(std::vector<AVLTreeNode<T> **> path){  // starting from
             *indirect = (*indirect)->right_rotate();
         }
         
-        else if ((*indirect)->balanceFactor() <= -2 and (*indirect)->right->balanceFactor() <= -1)  // right - right
+        else if ((*indirect)->balanceFactor() <= -2 and (*indirect)->right->balanceFactor() <= 0)  // right - right
             *indirect = (*indirect)->left_rotate();
         
         else if ((*indirect)->balanceFactor() <= -2){  // right - left
@@ -166,7 +165,7 @@ int AVLTree<T>::size() const{
 
 template <class T>
 int AVLTree<T>::find(T value) const{
-    AVLTreeNode<T> *direct = root;  // to generalize insertion
+    AVLTreeNode<T> *direct = root;
     int idx = 0;
     
     while (direct != nullptr and direct->value != value){
@@ -187,8 +186,7 @@ int AVLTree<T>::find(T value) const{
 
 template <class T>
 int AVLTree<T>::upper_bound(T value) const{
-    
-    AVLTreeNode<T> *direct = root;  // to generalize insertion
+    AVLTreeNode<T> *direct = root;
     int idx = 0;
     
     while (direct != nullptr){
@@ -205,8 +203,7 @@ int AVLTree<T>::upper_bound(T value) const{
 
 template <class T>
 int AVLTree<T>::lower_bound(T value) const{
-    
-    AVLTreeNode<T> *direct = root;  // to generalize insertion
+    AVLTreeNode<T> *direct = root;
     int idx = 0;
     
     while (direct != nullptr){
@@ -219,6 +216,26 @@ int AVLTree<T>::lower_bound(T value) const{
     }
     
     return idx;
+}
+
+template <class T>
+const T& AVLTree<T>::find_min() const{
+    AVLTreeNode<T> *cur = root;
+    
+    while (cur->left != nullptr)
+        cur = cur->left;
+    
+    return cur->value;
+}
+
+template <class T>
+const T& AVLTree<T>::find_max() const{
+    AVLTreeNode<T> *cur = root;
+    
+    while (cur->right != nullptr)
+        cur = cur->right;
+    
+    return cur->value;
 }
 
 template <class T>
@@ -243,7 +260,6 @@ const T& AVLTree<T>::operator[](std::size_t idx) const{
     return cur->value;
 }
 
-
 template <class T>
 void AVLTree<T>::display(){
     printf("\n");
@@ -253,7 +269,6 @@ void AVLTree<T>::display(){
         printf("Empty");
     printf("\n");
 }
-
 
 template <class T>
 void AVLTree<T>::display(AVLTreeNode<T> *cur, int depth, int state){  // state: 1 -> left, 2 -> right , 0 -> root

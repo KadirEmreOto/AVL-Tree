@@ -16,6 +16,7 @@ int main(int argc, const char * argv[]) {
     tree.display();
     
     std::cout << tree.lower_bound("Keo") << std::endl;
+    std::cout << tree.find_max() << std::endl;
     std::cout << tree.size() << std::endl;
     std::cout << tree.empty() << std::endl;
     tree.clear();

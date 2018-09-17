@@ -31,6 +31,9 @@ public:
     int find(T value) const;
     int lower_bound(T value) const;
     int upper_bound(T value) const;
+    
+    const T& find_min() const;
+    const T& find_max() const;
     const T& operator[](std::size_t idx) const;
     
     void display();
